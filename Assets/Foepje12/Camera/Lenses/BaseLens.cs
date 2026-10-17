@@ -1,12 +1,16 @@
-﻿
-namespace Foepje12.Camera
-{    
-    public class Lens : BaseBeamHandler
+﻿using UnityEngine;
+
+namespace Foepje12.Camera.Lenses
+{
+    public class BaseLens : BaseBeamHandler
     {
         #region Variables
+        
+        protected Vector2 beamOrigin;
+        protected float Angle;
 
         private bool _beamIn;
-        
+
         #endregion
 
         #region Functions
@@ -21,8 +25,10 @@ namespace Foepje12.Camera
         }
 
 
-        public virtual void BeamIn()
+        public virtual void BeamIn(Vector2 _beamOrigin)
         {
+            beamOrigin = _beamOrigin;
+
             beamLine.positionCount = 2;
             beamLine.SetPosition(0, transform.position);
             _beamIn = true;

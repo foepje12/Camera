@@ -18,7 +18,7 @@ namespace Foepje12.Camera
         }
 
 
-        public override void BeamIn()
+        public override void BeamIn(Vector2 beamOrigin)
         {
             Debug.Log("Level Finished!");
         }

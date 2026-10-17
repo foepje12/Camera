@@ -1,4 +1,5 @@
 ﻿
+using Foepje12.Camera.Lenses;
 using UnityEngine;
 
 namespace Foepje12.Camera
@@ -9,8 +10,8 @@ namespace Foepje12.Camera
         #region Variables
 
         protected LineRenderer beamLine;
-        protected Lens currentLens;
 
+        protected BaseLens _receivingLens;
 
         #endregion
 
@@ -25,29 +26,37 @@ namespace Foepje12.Camera
 
         public void FireBeam()
         {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right);
+            var direction = GetBeamDirection();
+            var mask = LayerMask.GetMask("Default");
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 100, mask);
 
             if (hit)
             {
                 beamLine.SetPosition(1, hit.point);
 
-                if (hit.transform.TryGetComponent<Lens>(out var lens))
+                if (hit.transform.TryGetComponent<BaseLens>(out var lens))
                 {
-                    if (currentLens != lens)
+                    if (_receivingLens != lens)
                     {
-                        currentLens = lens;
-                        currentLens.BeamIn();
+                        _receivingLens = lens;
+                        _receivingLens.BeamIn(transform.position);
                     }
 
                 }
-                else if (currentLens != null)
+                else if (_receivingLens != null)
                 {
-                    currentLens.BeamOut();
-                    currentLens = null;
+                    _receivingLens.BeamOut();
+                    _receivingLens = null;
                 }
 
                 #endregion
             }
+        }
+
+
+        protected virtual Vector2 GetBeamDirection()
+        {
+            return transform.right;
         }
     }
 }
