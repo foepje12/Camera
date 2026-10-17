@@ -2,6 +2,9 @@
 
 namespace Foepje12.Camera
 {
+    /// <summary>
+    /// A simple static list to avoid infinite loops
+    /// </summary>
     public static class BeamPathHandler
     {
         #region Variables
@@ -32,6 +35,10 @@ namespace Foepje12.Camera
 
             return false;
         }
+
+
+        public static void ClearList() =>
+            handlers.Clear();
 
         #endregion
     }

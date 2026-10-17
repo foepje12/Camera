@@ -25,6 +25,7 @@ public class InventoryLens : MonoBehaviour
         _camera = Camera.main;
     }
 
+
     private void Update()
     {
         _mousePosition = Mouse.current.position.ReadValue();
@@ -46,10 +47,8 @@ public class InventoryLens : MonoBehaviour
                 {
                     var success = slot.AddLens(_lensTypes[_draggingLensIndex]);
 
-                    if (success)
-                    {
-                        DestroyDraggingLens();
-                    }
+                    if (success)                    
+                        DestroyDraggingLens();                    
                 }
             }
         }
@@ -59,11 +58,10 @@ public class InventoryLens : MonoBehaviour
             var collider = Physics2D.OverlapPoint(_camera.ScreenToWorldPoint(_mousePosition));
             if (collider != null && collider.TryGetComponent(out BaseLens lens))
             {
+                lens.BeamOut();
                 Destroy(lens.gameObject);
             }
         }
-
-
     }
 
 
@@ -86,7 +84,6 @@ public class InventoryLens : MonoBehaviour
         _draggingLens = null;
         _draggingLensIndex = -1;
     }
-
 
     #endregion
 }

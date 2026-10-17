@@ -8,7 +8,7 @@ namespace Foepje12.Camera.Lenses
 
         protected Vector2 beamOrigin;
         protected float Angle;
-                
+
         private bool _beamIn;
 
         #endregion
@@ -18,10 +18,12 @@ namespace Foepje12.Camera.Lenses
 
         protected void Update()
         {
+            var hit = FireBeam();
+
+            HandleBeam(hit);
+
             if (_beamIn)
-            {
-                FireBeam();
-            }
+                EmitBeam(hit);
         }
 
 
@@ -41,11 +43,13 @@ namespace Foepje12.Camera.Lenses
             beamLine.positionCount = 0;
             BeamPathHandler.RemoveHandler(this);
 
-            if(_receivingLens != null)
+
+            if (_receivingLens != null)
+            {
                 _receivingLens.BeamOut();
+                _receivingLens = null;
+            }
         }
-
-
         #endregion
     }
 }

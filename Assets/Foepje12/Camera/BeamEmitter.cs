@@ -18,7 +18,13 @@ public class BeamEmitter : BaseBeamHandler
 
     private void Update()
     {
-        FireBeam();
+        var hit = FireBeam();
+
+        if (hit == false)
+            return;
+
+        HandleBeam(hit);
+        EmitBeam(hit);
     }
 
     #endregion

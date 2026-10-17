@@ -15,32 +15,43 @@ namespace Foepje12.Camera
 
         #endregion
 
-
         #region Functions
 
-        public void FireBeam()
+        public RaycastHit2D FireBeam()
         {
             var direction = GetBeamDirection();
             var mask = LayerMask.GetMask("Default");
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 100, mask);
+            return Physics2D.Raycast(transform.position, direction, 100, mask);
+        }
 
+
+        public void HandleBeam(RaycastHit2D hit)
+        {
             if (hit == false)
                 return;
 
+            if (hit.transform.GetComponent<BaseLens>() == null && _receivingLens != null)
+            {
+                _receivingLens.BeamOut();
+                _receivingLens = null;
+            }
+        }
+
+
+        public void EmitBeam(RaycastHit2D hit)
+        {
             beamLine.SetPosition(1, hit.point);
 
-            if (hit.transform.TryGetComponent<BaseLens>(out var lens))
+            if (hit.transform.TryGetComponent(out BaseLens lens))
             {
                 if (_receivingLens != lens && BeamPathHandler.AddHandler(lens))
                 {
+                    if (_receivingLens != null)
+                        _receivingLens.BeamOut();
+
                     _receivingLens = lens;
                     _receivingLens.BeamIn(transform.position);
                 }
-            }
-            else if (_receivingLens != null)
-            {                
-                _receivingLens.BeamOut();
-                _receivingLens = null;
             }
         }
 
