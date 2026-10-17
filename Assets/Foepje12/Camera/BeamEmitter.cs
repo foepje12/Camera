@@ -9,10 +9,8 @@ public class BeamEmitter : BaseBeamHandler
 
     #region Functions
 
-    new void Start()
+    private void Start()
     {
-        base.Start();
-
         beamLine.positionCount = 2;
         beamLine.SetPosition(0, transform.position);
         beamLine.SetPosition(1, transform.position);

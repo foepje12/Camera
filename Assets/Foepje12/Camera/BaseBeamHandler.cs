@@ -9,7 +9,7 @@ namespace Foepje12.Camera
     {
         #region Variables
 
-        protected LineRenderer beamLine;
+        [SerializeField] protected LineRenderer beamLine;
 
         protected BaseLens _receivingLens;
 
@@ -18,38 +18,29 @@ namespace Foepje12.Camera
 
         #region Functions
 
-        protected void Start()
-        {
-            beamLine = GetComponent<LineRenderer>();
-        }
-
-
         public void FireBeam()
         {
             var direction = GetBeamDirection();
             var mask = LayerMask.GetMask("Default");
             RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 100, mask);
 
-            if (hit)
+            if (hit == false)
+                return;
+
+            beamLine.SetPosition(1, hit.point);
+
+            if (hit.transform.TryGetComponent<BaseLens>(out var lens))
             {
-                beamLine.SetPosition(1, hit.point);
-
-                if (hit.transform.TryGetComponent<BaseLens>(out var lens))
+                if (_receivingLens != lens && BeamPathHandler.AddHandler(lens))
                 {
-                    if (_receivingLens != lens)
-                    {
-                        _receivingLens = lens;
-                        _receivingLens.BeamIn(transform.position);
-                    }
-
+                    _receivingLens = lens;
+                    _receivingLens.BeamIn(transform.position);
                 }
-                else if (_receivingLens != null)
-                {
-                    _receivingLens.BeamOut();
-                    _receivingLens = null;
-                }
-
-                #endregion
+            }
+            else if (_receivingLens != null)
+            {                
+                _receivingLens.BeamOut();
+                _receivingLens = null;
             }
         }
 
@@ -58,5 +49,7 @@ namespace Foepje12.Camera
         {
             return transform.right;
         }
+
+        #endregion
     }
 }

@@ -5,10 +5,10 @@ namespace Foepje12.Camera.Lenses
     public class BaseLens : BaseBeamHandler
     {
         #region Variables
-        
+
         protected Vector2 beamOrigin;
         protected float Angle;
-
+                
         private bool _beamIn;
 
         #endregion
@@ -39,7 +39,12 @@ namespace Foepje12.Camera.Lenses
         {
             _beamIn = false;
             beamLine.positionCount = 0;
+            BeamPathHandler.RemoveHandler(this);
+
+            if(_receivingLens != null)
+                _receivingLens.BeamOut();
         }
+
 
         #endregion
     }

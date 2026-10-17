@@ -415,3 +415,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a05a03c18b37d3741ae5ae143b139420, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Foepje12.Camera.Lens
+  beamLine: {fileID: 2683770724470273167}

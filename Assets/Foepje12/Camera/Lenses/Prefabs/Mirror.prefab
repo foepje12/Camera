@@ -404,6 +404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e7d61cb2a8fc5d45823baf0cea2b74d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Foepje12.Camera.Mirror
+  beamLine: {fileID: 3430312301892665080}
 --- !u!114 &7033864341693376056
 MonoBehaviour:
   m_ObjectHideFlags: 0
