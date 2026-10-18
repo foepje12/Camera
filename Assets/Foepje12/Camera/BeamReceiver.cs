@@ -30,7 +30,7 @@ namespace Foepje12.Camera
         {
             if (ReceivesBeam == false || _finishedLevel)
                 return;
-                        
+
             // Check if all Focal Points are hit
             var hit = _focalPoints.Where(x => x.ReceivesBeam == false);
 
@@ -42,7 +42,7 @@ namespace Foepje12.Camera
 
             _counter += Time.deltaTime;
 
-            if (_counter > 3)
+            if (_counter > 1f)
             {
                 _finishedLevel = true;
                 _levelAnimator.SetTrigger("Level Finish");

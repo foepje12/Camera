@@ -10,5 +10,18 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+
+    public void LoadNextLevel()
+    {
+        var index = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(index + 1);
+    }
+
+
+    public void ToMainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
     #endregion
 }
