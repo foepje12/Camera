@@ -39,7 +39,10 @@ namespace Foepje12.Camera
 
         public void EmitBeam(RaycastHit2D hit)
         {
-            beamLine.SetPosition(1, hit.point);
+            var point = (Vector3)hit.point;
+            point.z = .1f;
+
+            beamLine.SetPosition(1, point);
 
             if (hit.transform.TryGetComponent(out BaseLens lens))
             {
@@ -58,6 +61,17 @@ namespace Foepje12.Camera
         protected virtual Vector2 GetBeamDirection()
         {
             return transform.right;
+        }
+
+
+        private void OnDrawGizmos()
+        {
+            var hit = FireBeam();
+
+            var lens = hit.transform.GetComponent<BaseLens>();
+
+            Gizmos.color = lens == null ? Color.red : Color.green;
+            Gizmos.DrawLine(transform.position, hit.point);
         }
 
         #endregion

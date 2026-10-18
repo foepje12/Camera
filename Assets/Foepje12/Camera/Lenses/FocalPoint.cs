@@ -14,7 +14,7 @@ namespace Foepje12.Camera.Lenses
 
         protected override Vector2 GetBeamDirection()
         {
-            return ((Vector2)transform.position - beamOrigin);
+            return -(beamOrigin - (Vector2)transform.position);
         }
 
         #endregion

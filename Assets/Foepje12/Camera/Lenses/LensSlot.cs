@@ -18,7 +18,9 @@ namespace Foepje12.Camera.Lenses
             if (_holdingLens != null)
                 return false;
 
-            _holdingLens = Instantiate(lensPrefab, transform.position, Quaternion.identity);
+            var position = transform.position;
+            position.z = 0f;
+            _holdingLens = Instantiate(lensPrefab, position, Quaternion.identity);
             return true;
         }
 
