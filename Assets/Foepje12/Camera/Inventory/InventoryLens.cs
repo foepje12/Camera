@@ -53,11 +53,16 @@ public class InventoryLens : MonoBehaviour
             }
         }
 
+        // Destroy Lens on Right Click
         if (Mouse.current.rightButton.wasReleasedThisFrame)
         {
             var collider = Physics2D.OverlapPoint(_camera.ScreenToWorldPoint(_mousePosition));
             if (collider != null && collider.TryGetComponent(out BaseLens lens))
             {
+                // Focal Points can not be destroyed
+                if (lens.GetType() == typeof(FocalPoint))
+                    return;
+
                 lens.BeamOut();
                 Destroy(lens.gameObject);
             }

@@ -6,10 +6,10 @@ namespace Foepje12.Camera.Lenses
     {
         #region Variables
 
-        protected Vector2 beamOrigin;
-        protected float Angle;
+        public bool ReceivesBeam { get; protected set; }
 
-        private bool _beamIn;
+        protected Vector2 beamOrigin;
+        protected float Angle;        
 
         #endregion
 
@@ -22,7 +22,7 @@ namespace Foepje12.Camera.Lenses
 
             HandleBeam(hit);
 
-            if (_beamIn)
+            if (ReceivesBeam)
                 EmitBeam(hit);
         }
 
@@ -33,13 +33,13 @@ namespace Foepje12.Camera.Lenses
 
             beamLine.positionCount = 2;
             beamLine.SetPosition(0, transform.position);
-            _beamIn = true;
+            ReceivesBeam = true;
         }
 
 
         public virtual void BeamOut()
         {
-            _beamIn = false;
+            ReceivesBeam = false;
             beamLine.positionCount = 0;
             BeamPathHandler.RemoveHandler(this);
 

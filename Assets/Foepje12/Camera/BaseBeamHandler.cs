@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Foepje12.Camera
 {
-    [RequireComponent(typeof(LineRenderer))]
     public class BaseBeamHandler : MonoBehaviour
     {
         #region Variables
