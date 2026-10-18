@@ -40,12 +40,18 @@ namespace Foepje12.Camera
         public void EmitBeam(RaycastHit2D hit)
         {
             var point = (Vector3)hit.point;
+
             point.z = .1f;
 
             beamLine.SetPosition(1, point);
 
             if (hit.transform.TryGetComponent(out BaseLens lens))
             {
+                if (beamLine.positionCount == 2)
+                    beamLine.positionCount = 3;
+
+                beamLine.SetPosition(2, hit.transform.position + new Vector3(0,0, .1f));
+
                 if (_receivingLens != lens && BeamPathHandler.AddHandler(lens))
                 {
                     if (_receivingLens != null)
@@ -54,6 +60,10 @@ namespace Foepje12.Camera
                     _receivingLens = lens;
                     _receivingLens.BeamIn(transform.position);
                 }
+            }
+            else
+            {
+                beamLine.positionCount = 2;
             }
         }
 
